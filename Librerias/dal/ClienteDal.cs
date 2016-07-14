@@ -16,6 +16,16 @@ namespace Librerias.dal
                 r = grupo.Cliente.OrderBy(c => c.Nombre).ToList();
             }
             return r;
-        } 
+        }
+        public static bool Insertar(Cliente obj)
+        {
+            var r = true;
+            using (var grupo = new proyectolibreriaEntities())
+            {
+                grupo.Cliente.Add(obj);
+                grupo.SaveChanges();
+            }
+            return true;
+        }
     }
 }

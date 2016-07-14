@@ -88,6 +88,7 @@
             this.agregarClienteToolStripMenuItem.Name = "agregarClienteToolStripMenuItem";
             this.agregarClienteToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.agregarClienteToolStripMenuItem.Text = "Agregar Cliente";
+            this.agregarClienteToolStripMenuItem.Click += new System.EventHandler(this.agregarClienteToolStripMenuItem_Click);
             // 
             // listarClienteToolStripMenuItem
             // 
@@ -107,14 +108,14 @@
             // agregarLibrosToolStripMenuItem
             // 
             this.agregarLibrosToolStripMenuItem.Name = "agregarLibrosToolStripMenuItem";
-            this.agregarLibrosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.agregarLibrosToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.agregarLibrosToolStripMenuItem.Text = "Agregar Libros";
             this.agregarLibrosToolStripMenuItem.Click += new System.EventHandler(this.agregarLibrosToolStripMenuItem_Click);
             // 
             // listarLibrosToolStripMenuItem
             // 
             this.listarLibrosToolStripMenuItem.Name = "listarLibrosToolStripMenuItem";
-            this.listarLibrosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.listarLibrosToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.listarLibrosToolStripMenuItem.Text = "Listar Libros";
             this.listarLibrosToolStripMenuItem.Click += new System.EventHandler(this.listarLibrosToolStripMenuItem_Click);
             // 

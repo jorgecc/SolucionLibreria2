@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ProyectoLibreria_Cliente;
 using ProyectoLibreria_Libro;
 using ProyectoLibreria_Venta;
 
@@ -59,6 +60,12 @@ namespace ProyectoLibreria
         private void listarLibrosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var form=new FormListarLibros();
+            form.ShowDialog();
+        }
+
+        private void agregarClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form=new FormInsertarCliente();
             form.ShowDialog();
         }
     }

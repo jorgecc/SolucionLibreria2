@@ -110,6 +110,10 @@
     <Folder Include="venta\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ProyectoLibreria_Cliente\ProyectoLibreria_Cliente.csproj">
+      <Project>{7562fb76-a700-4e20-a188-7b082f4332fe}</Project>
+      <Name>ProyectoLibreria_Cliente</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProyectoLibreria_Libro\ProyectoLibreria_Libro.csproj">
       <Project>{4abf7b35-67f5-4ccc-8255-c51eca612a23}</Project>
       <Name>ProyectoLibreria_Libro</Name>

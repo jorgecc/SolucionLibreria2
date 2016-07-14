@@ -57,6 +57,7 @@
     <Compile Include="Cliente.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="convertir\ClienteConvertir.cs" />
     <Compile Include="convertir\LibroConvertir.cs" />
     <Compile Include="convertir\VentaConvertir.cs" />
     <Compile Include="dal\CategoriaDal.cs" />
