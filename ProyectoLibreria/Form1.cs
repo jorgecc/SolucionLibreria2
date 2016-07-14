@@ -68,5 +68,11 @@ namespace ProyectoLibreria
             var form=new FormInsertarCliente();
             form.ShowDialog();
         }
+
+        private void listarClienteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form=new FormListarClientes();
+            form.ShowDialog();
+        }
     }
 }

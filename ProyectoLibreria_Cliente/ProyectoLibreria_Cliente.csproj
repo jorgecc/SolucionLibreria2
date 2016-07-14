@@ -48,12 +48,21 @@
     <Compile Include="FormInsertarCliente.Designer.cs">
       <DependentUpon>FormInsertarCliente.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormListarClientes.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormListarClientes.Designer.cs">
+      <DependentUpon>FormListarClientes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormInsertarCliente.resx">
       <DependentUpon>FormInsertarCliente.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormListarClientes.resx">
+      <DependentUpon>FormListarClientes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

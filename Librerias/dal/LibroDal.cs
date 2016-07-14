@@ -27,11 +27,19 @@ namespace Librerias.dal
             }
             return r;
         }
-        public static bool Insertar(Libro obj)
+        public static bool Insertar(Libro obj,List<Categoria> categorias )
         {
             var r = true;
+            obj.Categoria=new List<Categoria>();
             using (var grupo = new proyectolibreriaEntities())
             {
+                foreach (var cat in categorias)
+                {
+                    var catNueva = grupo.Categoria
+                        .FirstOrDefault(c => c.IdCategoria == cat.IdCategoria);
+                    obj.Categoria.Add(catNueva);
+                }
+
                 grupo.Libro.Add(obj);
                 grupo.SaveChanges();
             }

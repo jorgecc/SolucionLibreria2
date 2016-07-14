@@ -33,6 +33,7 @@ namespace ProyectoLibreria_Libro
 
             foreach (Categoria item in checkedListBoxCategorias.CheckedItems)
             {
+                
                 listaCat.Add(item);
             }
 
@@ -43,7 +44,8 @@ namespace ProyectoLibreria_Libro
             libro = LibroConvertir.CrearLibro(textBoxISBN.Text,
                 textBoxTitulo.Text, textBoxDescripcion.Text,
                 numericUpDownPrecio.Value, listaCat);
-            LibroDal.Insertar(libro);
+            
+            LibroDal.Insertar(libro,listaCat);
         }
     }
 }

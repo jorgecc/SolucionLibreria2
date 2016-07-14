@@ -95,6 +95,7 @@
             this.listarClienteToolStripMenuItem.Name = "listarClienteToolStripMenuItem";
             this.listarClienteToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.listarClienteToolStripMenuItem.Text = "Listar Cliente";
+            this.listarClienteToolStripMenuItem.Click += new System.EventHandler(this.listarClienteToolStripMenuItem_Click);
             // 
             // librosToolStripMenuItem
             // 
