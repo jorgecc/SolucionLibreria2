@@ -25,8 +25,11 @@ namespace Librerias
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Categoria> Categoria { get; set; }
         public virtual DbSet<Cliente> Cliente { get; set; }
         public virtual DbSet<Libro> Libro { get; set; }
         public virtual DbSet<Venta> Venta { get; set; }
+        public virtual DbSet<VVentasXCliente> VVentasXCliente { get; set; }
+        public virtual DbSet<VLibroCategoria> VLibroCategoria { get; set; }
     }
 }

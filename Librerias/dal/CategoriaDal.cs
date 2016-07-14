@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace Librerias.dal
 {
-    public static class ClienteDal
+    public static class CategoriaDal
     {
-        public static List<Cliente> Listar()
+        public static List<Categoria> Listar()
         {
-            var r = new List<Cliente>();
+            var r = new List<Categoria>();
             using (var grupo = new proyectolibreriaEntities())
             {
-                r = grupo.Cliente.OrderBy(c => c.Nombre).ToList();
+                r = grupo.Categoria.OrderBy(c => c.Nombre).ToList();
             }
             return r;
-        } 
+        }
     }
 }

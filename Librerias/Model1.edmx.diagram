@@ -4,12 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f346c7664ab24d4db9640f4075993457" Name="Diagram1">
-        <EntityTypeShape EntityType="proyectolibreriaModel.Cliente" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="proyectolibreriaModel.Libro" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="proyectolibreriaModel.Venta" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="proyectolibreriaModel.FK_Venta_Cliente" ManuallyRouted="false" />
-        <AssociationConnector Association="proyectolibreriaModel.FK_Venta_Libro" ManuallyRouted="false" />
+      <Diagram DiagramId="f346c7664ab24d4db9640f4075993457" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="proyectolibreriaModel.Categoria" Width="1.5" PointX="1" PointY="1.375" />
+        <EntityTypeShape EntityType="proyectolibreriaModel.Cliente" Width="1.5" PointX="3.625" PointY="4.125" />
+        <EntityTypeShape EntityType="proyectolibreriaModel.Libro" Width="1.5" PointX="4.25" PointY="0.75" />
+        <EntityTypeShape EntityType="proyectolibreriaModel.Venta" Width="1.5" PointX="8" PointY="0.75" />
+        <EntityTypeShape EntityType="proyectolibreriaModel.VVentasXCliente" Width="1.5" PointX="6.125" PointY="3.5" />
+        <AssociationConnector Association="proyectolibreriaModel.FK_Venta_Cliente" />
+        <AssociationConnector Association="proyectolibreriaModel.FK_Venta_Libro" />
+        <AssociationConnector Association="proyectolibreriaModel.CategoriaLibro" />
+        <EntityTypeShape EntityType="proyectolibreriaModel.VLibroCategoria" Width="1.5" PointX="0.75" PointY="3.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

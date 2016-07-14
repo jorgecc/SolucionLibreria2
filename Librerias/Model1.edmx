@@ -4,7 +4,22 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="proyectolibreriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="proyectolibreriaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="CategoriaLibro">
+          <Key>
+            <PropertyRef Name="Categoria_IdCategoria" />
+            <PropertyRef Name="Libro_ISBN" />
+          </Key>
+          <Property Name="Categoria_IdCategoria" Type="int" Nullable="false" />
+          <Property Name="Libro_ISBN" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="Rut" />
@@ -21,7 +36,7 @@
           <Property Name="ISBN" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="50" />
-          <Property Name="Precio" Type="money" />
+          <Property Name="Precio" Type="decimal" Precision="19" Scale="4" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Activo" Type="int" Nullable="false" />
         </EntityType>
@@ -32,10 +47,67 @@
           <Property Name="IdVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rut" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="ISBN" Type="varchar" MaxLength="32" Nullable="false" />
-          <Property Name="Monto" Type="money" Nullable="false" />
+          <Property Name="Monto" Type="decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="Activo" Type="int" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'proyectolibreria.dbo.VLibroCategoria' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VLibroCategoria">
+          <Key>
+            <PropertyRef Name="ISBN" />
+            <PropertyRef Name="Titulo" />
+            <PropertyRef Name="FechaCreacion" />
+            <PropertyRef Name="Activo" />
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="ISBN" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="Precio" Type="decimal" Precision="19" Scale="4" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="Activo" Type="int" Nullable="false" />
+          <Property Name="IdCategoria" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'proyectolibreria.dbo.VVentasXCliente' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="VVentasXCliente">
+          <Key>
+            <PropertyRef Name="Rut" />
+            <PropertyRef Name="Monto" />
+            <PropertyRef Name="FechaCreacion" />
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Rut" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="Monto" Type="decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <Association Name="FK_CategoriaLibro_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1" />
+          <End Role="CategoriaLibro" Type="Self.CategoriaLibro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="IdCategoria" />
+            </Principal>
+            <Dependent Role="CategoriaLibro">
+              <PropertyRef Name="Categoria_IdCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CategoriaLibro_Libro">
+          <End Role="Libro" Type="Self.Libro" Multiplicity="1" />
+          <End Role="CategoriaLibro" Type="Self.CategoriaLibro" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Libro">
+              <PropertyRef Name="ISBN" />
+            </Principal>
+            <Dependent Role="CategoriaLibro">
+              <PropertyRef Name="Libro_ISBN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Venta_Cliente">
           <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
           <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
@@ -61,9 +133,39 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="proyectolibreriaModelStoreContainer">
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CategoriaLibro" EntityType="Self.CategoriaLibro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Libro" EntityType="Self.Libro" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Venta" EntityType="Self.Venta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VLibroCategoria" EntityType="Self.VLibroCategoria" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VLibroCategoria].[ISBN] AS [ISBN], 
+    [VLibroCategoria].[Titulo] AS [Titulo], 
+    [VLibroCategoria].[Descripcion] AS [Descripcion], 
+    [VLibroCategoria].[Precio] AS [Precio], 
+    [VLibroCategoria].[FechaCreacion] AS [FechaCreacion], 
+    [VLibroCategoria].[Activo] AS [Activo], 
+    [VLibroCategoria].[IdCategoria] AS [IdCategoria]
+    FROM [dbo].[VLibroCategoria] AS [VLibroCategoria]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="VVentasXCliente" EntityType="Self.VVentasXCliente" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [VVentasXCliente].[Rut] AS [Rut], 
+    [VVentasXCliente].[Monto] AS [Monto], 
+    [VVentasXCliente].[FechaCreacion] AS [FechaCreacion], 
+    [VVentasXCliente].[Titulo] AS [Titulo], 
+    [VVentasXCliente].[Precio] AS [Precio]
+    FROM [dbo].[VVentasXCliente] AS [VVentasXCliente]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_CategoriaLibro_Categoria" Association="Self.FK_CategoriaLibro_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="CategoriaLibro" EntitySet="CategoriaLibro" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CategoriaLibro_Libro" Association="Self.FK_CategoriaLibro_Libro">
+            <End Role="Libro" EntitySet="Libro" />
+            <End Role="CategoriaLibro" EntitySet="CategoriaLibro" />
+          </AssociationSet>
           <AssociationSet Name="FK_Venta_Cliente" Association="Self.FK_Venta_Cliente">
             <End Role="Cliente" EntitySet="Cliente" />
             <End Role="Venta" EntitySet="Venta" />
@@ -73,49 +175,90 @@
             <End Role="Venta" EntitySet="Venta" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="proyectolibreriaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="proyectolibreriaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categoria" EntityType="proyectolibreriaModel.Categoria" />
+          <EntitySet Name="Cliente" EntityType="proyectolibreriaModel.Cliente" />
+          <EntitySet Name="Libro" EntityType="proyectolibreriaModel.Libro" />
+          <EntitySet Name="Venta" EntityType="proyectolibreriaModel.Venta" />
+          <EntitySet Name="VVentasXCliente" EntityType="proyectolibreriaModel.VVentasXCliente" />
+          <AssociationSet Name="FK_Venta_Cliente" Association="proyectolibreriaModel.FK_Venta_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Venta_Libro" Association="proyectolibreriaModel.FK_Venta_Libro">
+            <End Role="Libro" EntitySet="Libro" />
+            <End Role="Venta" EntitySet="Venta" />
+          </AssociationSet>
+          <AssociationSet Name="CategoriaLibro" Association="proyectolibreriaModel.CategoriaLibro">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Libro" EntitySet="Libro" />
+          </AssociationSet>
+          <EntitySet Name="VLibroCategoria" EntityType="proyectolibreriaModel.VLibroCategoria" />
+        </EntityContainer>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Libro" Relationship="proyectolibreriaModel.CategoriaLibro" FromRole="Categoria" ToRole="Libro" />
+        </EntityType>
         <EntityType Name="Cliente">
           <Key>
             <PropertyRef Name="Rut" />
           </Key>
-          <Property Name="Rut" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Rut" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Activo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Venta" Relationship="Self.FK_Venta_Cliente" FromRole="Cliente" ToRole="Venta" />
+          <NavigationProperty Name="Venta" Relationship="proyectolibreriaModel.FK_Venta_Cliente" FromRole="Cliente" ToRole="Venta" />
         </EntityType>
         <EntityType Name="Libro">
           <Key>
             <PropertyRef Name="ISBN" />
           </Key>
-          <Property Name="ISBN" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ISBN" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Activo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Venta" Relationship="Self.FK_Venta_Libro" FromRole="Libro" ToRole="Venta" />
+          <NavigationProperty Name="Venta" Relationship="proyectolibreriaModel.FK_Venta_Libro" FromRole="Libro" ToRole="Venta" />
+          <NavigationProperty Name="Categoria" Relationship="proyectolibreriaModel.CategoriaLibro" FromRole="Libro" ToRole="Categoria" />
         </EntityType>
         <EntityType Name="Venta">
           <Key>
             <PropertyRef Name="IdVenta" />
           </Key>
           <Property Name="IdVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rut" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ISBN" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Rut" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="ISBN" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Activo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Cliente" Relationship="Self.FK_Venta_Cliente" FromRole="Venta" ToRole="Cliente" />
-          <NavigationProperty Name="Libro" Relationship="Self.FK_Venta_Libro" FromRole="Venta" ToRole="Libro" />
+          <NavigationProperty Name="Cliente" Relationship="proyectolibreriaModel.FK_Venta_Cliente" FromRole="Venta" ToRole="Cliente" />
+          <NavigationProperty Name="Libro" Relationship="proyectolibreriaModel.FK_Venta_Libro" FromRole="Venta" ToRole="Libro" />
+        </EntityType>
+        <EntityType Name="VVentasXCliente">
+          <Key>
+            <PropertyRef Name="Rut" />
+            <PropertyRef Name="Monto" />
+            <PropertyRef Name="FechaCreacion" />
+            <PropertyRef Name="Titulo" />
+          </Key>
+          <Property Name="Rut" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="Monto" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
         </EntityType>
         <Association Name="FK_Venta_Cliente">
-          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
-          <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+          <End Type="proyectolibreriaModel.Cliente" Role="Cliente" Multiplicity="1" />
+          <End Type="proyectolibreriaModel.Venta" Role="Venta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cliente">
               <PropertyRef Name="Rut" />
@@ -126,8 +269,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Venta_Libro">
-          <End Role="Libro" Type="Self.Libro" Multiplicity="1" />
-          <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+          <End Type="proyectolibreriaModel.Libro" Role="Libro" Multiplicity="1" />
+          <End Type="proyectolibreriaModel.Venta" Role="Venta" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Libro">
               <PropertyRef Name="ISBN" />
@@ -137,56 +280,103 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="proyectolibreriaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
-          <EntitySet Name="Libro" EntityType="Self.Libro" />
-          <EntitySet Name="Venta" EntityType="Self.Venta" />
-          <AssociationSet Name="FK_Venta_Cliente" Association="Self.FK_Venta_Cliente">
-            <End Role="Cliente" EntitySet="Cliente" />
-            <End Role="Venta" EntitySet="Venta" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Venta_Libro" Association="Self.FK_Venta_Libro">
-            <End Role="Libro" EntitySet="Libro" />
-            <End Role="Venta" EntitySet="Venta" />
-          </AssociationSet>
-        </EntityContainer>
+        <Association Name="CategoriaLibro">
+          <End Type="proyectolibreriaModel.Categoria" Role="Categoria" Multiplicity="*" />
+          <End Type="proyectolibreriaModel.Libro" Role="Libro" Multiplicity="*" />
+        </Association>
+        <EntityType Name="VLibroCategoria">
+          <Key>
+            <PropertyRef Name="ISBN" />
+            <PropertyRef Name="Titulo" />
+            <PropertyRef Name="FechaCreacion" />
+            <PropertyRef Name="Activo" />
+            <PropertyRef Name="IdCategoria" />
+          </Key>
+          <Property Name="ISBN" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Precio" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Activo" Type="Int32" Nullable="false" />
+          <Property Name="IdCategoria" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="proyectolibreriaModelStoreContainer" CdmEntityContainer="proyectolibreriaEntities">
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="proyectolibreriaModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Cliente">
             <EntityTypeMapping TypeName="proyectolibreriaModel.Cliente">
               <MappingFragment StoreEntitySet="Cliente">
-                <ScalarProperty Name="Rut" ColumnName="Rut" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Libro">
             <EntityTypeMapping TypeName="proyectolibreriaModel.Libro">
               <MappingFragment StoreEntitySet="Libro">
-                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
-                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Precio" ColumnName="Precio" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Venta">
             <EntityTypeMapping TypeName="proyectolibreriaModel.Venta">
               <MappingFragment StoreEntitySet="Venta">
-                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
-                <ScalarProperty Name="Rut" ColumnName="Rut" />
-                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
-                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
                 <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="IdVenta" ColumnName="IdVenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VVentasXCliente">
+            <EntityTypeMapping TypeName="proyectolibreriaModel.VVentasXCliente">
+              <MappingFragment StoreEntitySet="VVentasXCliente">
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="CategoriaLibro" TypeName="proyectolibreriaModel.CategoriaLibro" StoreEntitySet="CategoriaLibro">
+            <EndProperty Name="Libro">
+              <ScalarProperty Name="ISBN" ColumnName="Libro_ISBN" />
+            </EndProperty>
+            <EndProperty Name="Categoria">
+              <ScalarProperty Name="IdCategoria" ColumnName="Categoria_IdCategoria" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="VLibroCategoria">
+            <EntityTypeMapping TypeName="proyectolibreriaModel.VLibroCategoria">
+              <MappingFragment StoreEntitySet="VLibroCategoria">
+                <ScalarProperty Name="IdCategoria" ColumnName="IdCategoria" />
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

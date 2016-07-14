@@ -12,25 +12,14 @@ namespace Librerias
     using System;
     using System.Collections.Generic;
     
-    public partial class Libro
+    public partial class VLibroCategoria
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Libro()
-        {
-            this.Venta = new HashSet<Venta>();
-            this.Categoria = new HashSet<Categoria>();
-        }
-    
         public string ISBN { get; set; }
         public string Titulo { get; set; }
         public string Descripcion { get; set; }
         public Nullable<decimal> Precio { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public int Activo { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Venta> Venta { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Categoria> Categoria { get; set; }
+        public int IdCategoria { get; set; }
     }
 }

@@ -70,7 +70,7 @@
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
@@ -109,12 +109,14 @@
             this.agregarLibrosToolStripMenuItem.Name = "agregarLibrosToolStripMenuItem";
             this.agregarLibrosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.agregarLibrosToolStripMenuItem.Text = "Agregar Libros";
+            this.agregarLibrosToolStripMenuItem.Click += new System.EventHandler(this.agregarLibrosToolStripMenuItem_Click);
             // 
             // listarLibrosToolStripMenuItem
             // 
             this.listarLibrosToolStripMenuItem.Name = "listarLibrosToolStripMenuItem";
             this.listarLibrosToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.listarLibrosToolStripMenuItem.Text = "Listar Libros";
+            this.listarLibrosToolStripMenuItem.Click += new System.EventHandler(this.listarLibrosToolStripMenuItem_Click);
             // 
             // ventasToolStripMenuItem
             // 
@@ -138,12 +140,14 @@
             this.listarVentasPorClienteToolStripMenuItem.Name = "listarVentasPorClienteToolStripMenuItem";
             this.listarVentasPorClienteToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.listarVentasPorClienteToolStripMenuItem.Text = "Listar Ventas Por Cliente";
+            this.listarVentasPorClienteToolStripMenuItem.Click += new System.EventHandler(this.listarVentasPorClienteToolStripMenuItem_Click);
             // 
             // listarVentasPorLibroToolStripMenuItem
             // 
             this.listarVentasPorLibroToolStripMenuItem.Name = "listarVentasPorLibroToolStripMenuItem";
             this.listarVentasPorLibroToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.listarVentasPorLibroToolStripMenuItem.Text = "Listar Ventas Por Libro";
+            this.listarVentasPorLibroToolStripMenuItem.Click += new System.EventHandler(this.listarVentasPorLibroToolStripMenuItem_Click);
             // 
             // acercaDeToolStripMenuItem
             // 
